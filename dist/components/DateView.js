@@ -9,8 +9,11 @@ const DateView = ({
   selectDate,
   getSelectedDay,
   primaryColor,
-  labelFormat
+  labelFormat,
+  getDayClass,
+  disableSelectDay
 }) => {
+
   const [selectedDate, setSelectedDate] = useState(null);
   const firstSection = {
     marginLeft: '40px'
@@ -51,14 +54,14 @@ const DateView = ({
         let currentDay = addDays(month, j);
         days.push( /*#__PURE__*/React.createElement("div", {
           id: `${getId(currentDay)}`,
-          className: styles.dateDayItem,
+          className: `${styles.dateDayItem} ${getDayClass ? getDayClass(currentDay) : ''}`,
           style: getStyles(currentDay),
           key: currentDay,
           onClick: () => onDateClick(currentDay)
         }, /*#__PURE__*/React.createElement("div", {
-          className: styles.dayLabel
+          className: styles.dayLabel + ' dayLabel'
         }, format(currentDay, dayFormat)), /*#__PURE__*/React.createElement("div", {
-          className: styles.dateLabel
+          className: styles.dateLabel + ' dateLabel'
         }, format(currentDay, dateFormat))));
       }
 
@@ -82,6 +85,8 @@ const DateView = ({
   };
 
   const onDateClick = day => {
+
+    if(disableSelectDay) return;
     setSelectedDate(day);
 
     if (getSelectedDay) {

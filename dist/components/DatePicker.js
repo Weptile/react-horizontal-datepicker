@@ -25,7 +25,7 @@ const DatePicker = props => {
 
   const primaryColor = props.color ? props.color.indexOf("rgb") > 0 ? props.color : hexToRgb(props.color) : 'rgb(54, 105, 238)';
   const startDate = props.startDate || new Date();
-  const lastDate = addDays(startDate, props.days || 90);
+  const lastDate =  props.endDate ||  addDays(startDate, props.days || 90);
   let buttonzIndex = {
     zIndex: 2
   };
@@ -33,6 +33,7 @@ const DatePicker = props => {
     background: primaryColor
   };
   let Component = DateView;
+
 
   if (props.type === "month") {
     buttonzIndex = {
@@ -57,7 +58,7 @@ const DatePicker = props => {
   }, "<")), /*#__PURE__*/React.createElement(Component, _extends({}, props, {
     primaryColor: primaryColor,
     startDate: startDate,
-    lastDate: lastDate
+    lastDate: lastDate,
   })), /*#__PURE__*/React.createElement("div", {
     className: styles.buttonWrapper,
     style: buttonzIndex
