@@ -54,7 +54,7 @@ const DatePicker = props => {
   }, /*#__PURE__*/React.createElement("div", {
     className: styles.buttonWrapper,
     style: buttonzIndex
-  }, /*#__PURE__*/React.createElement("button", {
+  }, /*#__PURE__*/props.hideNavigation ? null :  React.createElement("button", {
     className: styles.button,
     style: buttonStyle,
     onClick: prev
@@ -63,7 +63,7 @@ const DatePicker = props => {
     startDate: startDate,
     lastDate: lastDate,
     containerRef
-  })), /*#__PURE__*/React.createElement("div", {
+  })), /*#__PURE__*/props.hideNavigation ? null : React.createElement("div", {
     className: styles.buttonWrapper,
     style: buttonzIndex
   }, /*#__PURE__*/React.createElement("button", {
