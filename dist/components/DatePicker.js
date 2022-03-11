@@ -2,25 +2,28 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { addDays } from "date-fns";
-import React from "react";
+import React, { useRef } from 'react';
 import hexToRgb from "../global/helpers/hexToRgb";
 import styles from "./DatePicker.module.css";
 import { DateView } from "./DateView";
 import { MonthView } from './MonthView';
 
 const DatePicker = props => {
+
+  const containerRef = useRef(null);
+
   const next = event => {
+    if(!containerRef.current) return;
     event.preventDefault();
-    const e = document.getElementById('container');
-    const width = e ? e.getBoundingClientRect().width : null;
-    e.scrollLeft += width - 60;
+    const width = containerRef.current.getBoundingClientRect().width;
+    containerRef.current.scrollLeft += width - 60;
   };
 
   const prev = event => {
+    if(!containerRef.current) return;
     event.preventDefault();
-    const e = document.getElementById('container');
-    const width = e ? e.getBoundingClientRect().width : null;
-    e.scrollLeft -= width - 60;
+    const width = containerRef.current.getBoundingClientRect().width;
+    containerRef.current.scrollLeft -= width - 60;
   };
 
   const primaryColor = props.color ? props.color.indexOf("rgb") > 0 ? props.color : hexToRgb(props.color) : 'rgb(54, 105, 238)';
@@ -59,6 +62,7 @@ const DatePicker = props => {
     primaryColor: primaryColor,
     startDate: startDate,
     lastDate: lastDate,
+    containerRef
   })), /*#__PURE__*/React.createElement("div", {
     className: styles.buttonWrapper,
     style: buttonzIndex

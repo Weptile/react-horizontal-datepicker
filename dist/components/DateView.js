@@ -4,15 +4,16 @@ import styles from "./DatePicker.module.css";
 import { addDays, addMonths, differenceInMonths, format, isSameDay, lastDayOfMonth, startOfMonth } from "date-fns";
 
 const DateView = ({
-  startDate,
-  lastDate,
-  selectDate,
-  getSelectedDay,
-  primaryColor,
-  labelFormat,
-  getDayClass,
-  disableSelectDay
-}) => {
+                    startDate,
+                    lastDate,
+                    selectDate,
+                    getSelectedDay,
+                    primaryColor,
+                    labelFormat,
+                    getDayClass,
+                    disableSelectDay,
+                    containerRef,
+                  }) => {
 
   const [selectedDate, setSelectedDate] = useState(null);
   const firstSection = {
@@ -79,7 +80,7 @@ const DateView = ({
     }
 
     return /*#__PURE__*/React.createElement("div", {
-      id: "container",
+      ref:containerRef,
       className: styles.dateListScrollable
     }, months);
   };
