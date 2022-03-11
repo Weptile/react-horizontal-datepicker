@@ -2,7 +2,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 
 /* eslint-disable react-hooks/exhaustive-deps */
 import { addDays } from "date-fns";
-import React, { useRef } from 'react';
+import React, { useEffect, useRef,useState } from 'react';
 import hexToRgb from "../global/helpers/hexToRgb";
 import styles from "./DatePicker.module.css";
 import { DateView } from "./DateView";
@@ -11,6 +11,8 @@ import { MonthView } from './MonthView';
 const DatePicker = props => {
 
   const containerRef = useRef(null);
+
+  const [displayNavigation,setDisplayNavigation] = useState(false);
 
   const next = event => {
     if(!containerRef.current) return;
@@ -49,28 +51,38 @@ const DatePicker = props => {
     };
   }
 
+  const getDisplayNavigation = () => {
+    if(!containerRef.current) return false;
+
+    return containerRef.current.clientWidth < containerRef.current.scrollWidth;
+  }
+
+  useEffect(()=>{
+    setDisplayNavigation(getDisplayNavigation())
+  },[containerRef])
+
   return /*#__PURE__*/React.createElement("div", {
     className: styles.container
   }, /*#__PURE__*/React.createElement("div", {
     className: styles.buttonWrapper,
     style: buttonzIndex
-  }, /*#__PURE__*/props.hideNavigation ? null :  React.createElement("button", {
+  }, /*#__PURE__*/displayNavigation ?   React.createElement("button", {
     className: styles.button,
     style: buttonStyle,
     onClick: prev
-  }, "<")), /*#__PURE__*/React.createElement(Component, _extends({}, props, {
+  }, "<") : null), /*#__PURE__*/React.createElement(Component, _extends({}, props, {
     primaryColor: primaryColor,
     startDate: startDate,
     lastDate: lastDate,
     containerRef
-  })), /*#__PURE__*/props.hideNavigation ? null : React.createElement("div", {
+  })), /*#__PURE__*/ displayNavigation ? React.createElement("div", {
     className: styles.buttonWrapper,
     style: buttonzIndex
   }, /*#__PURE__*/React.createElement("button", {
     className: styles.button,
     style: buttonStyle,
     onClick: next
-  }, ">")));
+  }, ">")): null);
 };
 
 export { DatePicker };
