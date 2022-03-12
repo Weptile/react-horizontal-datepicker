@@ -52,9 +52,14 @@ const DatePicker = props => {
   }
 
   const getDisplayNavigation = () => {
+
     if(!containerRef.current) return false;
 
-    return containerRef.current.clientWidth < containerRef.current.scrollWidth;
+    let _display = containerRef.current.clientWidth < containerRef.current.scrollWidth;
+
+    if(!_display && props.displayNavigation) _display = true;
+
+    return _display
   }
 
   useEffect(()=>{
@@ -63,14 +68,14 @@ const DatePicker = props => {
 
   return /*#__PURE__*/React.createElement("div", {
     className: styles.container
-  }, /*#__PURE__*/React.createElement("div", {
+  }, /*#__PURE__*/displayNavigation ? React.createElement("div", {
     className: styles.buttonWrapper,
     style: buttonzIndex
-  }, /*#__PURE__*/displayNavigation ?   React.createElement("button", {
+  }, /*#__PURE__*/   React.createElement("button", {
     className: styles.button,
     style: buttonStyle,
     onClick: prev
-  }, "<") : null), /*#__PURE__*/React.createElement(Component, _extends({}, props, {
+  }, "<")) : null, /*#__PURE__*/React.createElement(Component, _extends({}, props, {
     primaryColor: primaryColor,
     startDate: startDate,
     lastDate: lastDate,
